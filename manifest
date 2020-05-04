@@ -1,0 +1,10 @@
+: 1
+name: libunittest
+version: 0.1.0-a.0.z
+summary: unittest C++ library
+license: MIT
+description-file: README
+url: https://sequence-point.se/open-source/
+email: support@sequence-point.se
+depends: * build2 >= 0.12.0
+depends: * bpkg >= 0.12.0

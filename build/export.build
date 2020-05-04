@@ -1,0 +1,6 @@
+$out_root/
+{
+  include libunittest/
+}
+
+export $out_root/libunittest/$import.target
