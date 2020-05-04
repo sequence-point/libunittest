@@ -1,0 +1,68 @@
+int_libs = # Interface dependencies.
+imp_libs = # Implementation dependencies.
+
+./: lib{unittest}: libul{unittest}: {hxx ixx txx cxx}{** -**.test... -version} \
+  hxx{version} $imp_libs $int_libs
+
+# Unit tests.
+#
+exe{*.test}:
+{
+  test = true
+  install = false
+}
+
+for t: cxx{**.test...}
+{
+  d = $directory($t)
+  n = $name($t)...
+
+  ./: $d/exe{$n}: $t $d/{hxx ixx txx}{+$n} $d/testscript{+$n}
+  $d/exe{$n}: libul{unittest}: bin.whole = false
+}
+
+# Include the generated version header into the distribution (so that we don't
+# pick up an installed one) and don't remove it when cleaning in src (so that
+# clean results in a state identical to distributed).
+#
+hxx{version}: in{version} $src_root/manifest
+{
+  dist  = true
+  clean = ($src_root != $out_root)
+}
+
+# Build options.
+#
+cxx.poptions =+ "-I$out_root" "-I$src_root"
+
+obja{*}: cxx.poptions += -DLIBUNITTEST_STATIC_BUILD
+objs{*}: cxx.poptions += -DLIBUNITTEST_SHARED_BUILD
+
+# Export options.
+#
+lib{unittest}:
+{
+  cxx.export.poptions = "-I$out_root" "-I$src_root"
+  cxx.export.libs = $int_libs
+}
+
+liba{unittest}: cxx.export.poptions += -DLIBUNITTEST_STATIC
+libs{unittest}: cxx.export.poptions += -DLIBUNITTEST_SHARED
+
+# For pre-releases use the complete version to make sure they cannot be used
+# in place of another pre-release or the final version. See the version module
+# for details on the version.* variable values.
+#
+if $version.pre_release
+  lib{unittest}: bin.lib.version = @"-$version.project_id"
+else
+  lib{unittest}: bin.lib.version = @"-$version.major.$version.minor"
+
+# Install into the libunittest/ subdirectory of, say, /usr/include/
+# recreating subdirectories.
+#
+{hxx ixx txx}{*}:
+{
+  install         = include/libunittest/
+  install.subdirs = true
+}

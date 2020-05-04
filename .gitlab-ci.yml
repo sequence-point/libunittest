@@ -1,0 +1,12 @@
+image: sequencepoint/buildenv:latest
+
+stages:
+  - test
+
+test:
+  stage: test
+  tags:
+    - linux
+    - docker
+  script:
+    - b test
