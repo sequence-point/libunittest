@@ -1,6 +1,6 @@
 : 1
 name: libunittest
-version: 0.1.0-a.0.z
+version: 0.1.0
 summary: unittest C++ library
 license: MIT
 description-file: README
