@@ -1,8 +1,10 @@
 int_libs = # Interface dependencies.
 imp_libs = # Implementation dependencies.
 
-./: lib{unittest}: libul{unittest}: {hxx ixx txx cxx}{** -**.test... -version} \
+./: lib{unittest}: libul{unittest}: {hxx ixx txx}{** -**.test... -version} \
   hxx{version} $imp_libs $int_libs
+
+./: lib{unittest-main}: {cxx}{**} lib{unittest}
 
 # Unit tests.
 #
