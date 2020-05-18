@@ -4,7 +4,7 @@ imp_libs = # Implementation dependencies.
 ./: lib{unittest}: libul{unittest}: {hxx ixx txx cxx}{** -**.test... -version} \
   hxx{version} $imp_libs $int_libs
 
-lib{unittest}: bin.whole = true
+libul{unittest}: bin.whole = true
 
 # Unit tests.
 #
