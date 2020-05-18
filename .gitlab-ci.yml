@@ -3,10 +3,18 @@ image: sequencepoint/buildenv:latest
 stages:
   - test
 
-test:
+test-linux:
   stage: test
   tags:
     - linux
+    - docker
+  script:
+    - b test
+
+test-windows:
+  stage: test
+  tags:
+    - windows
     - docker
   script:
     - b test

@@ -125,6 +125,7 @@ public:
   static void
   run_all()
   {
+std::cout << "running tests\n";
     for (auto j = first(); j; j = j->next())
       j->run();
   }

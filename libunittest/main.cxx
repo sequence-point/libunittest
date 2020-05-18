@@ -6,6 +6,7 @@
 int
 main(int argc, char* argv[])
 {
+std::cout << "begin\n";
   char* verbosity_str = ::getenv("TEST_VERBOSITY");
   int verbosity{ 0 };
 
@@ -13,5 +14,6 @@ main(int argc, char* argv[])
     verbosity = std::stoi(verbosity_str);
   }
 
+std::cout << "end\n";
   return TEST::run_all(verbosity);
 }

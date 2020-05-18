@@ -4,7 +4,12 @@ imp_libs = # Implementation dependencies.
 ./: lib{unittest}: libul{unittest}: {hxx ixx txx}{** -**.test... -version} \
   hxx{version} $imp_libs $int_libs
 
-./: lib{unittest-main}: {cxx}{**} lib{unittest}
+./: lib{unittest-main}: {cxx}{main} lib{unittest}
+
+lib{unittest-main}:
+{
+  config.bin.lib=static
+}
 
 # Unit tests.
 #
@@ -20,7 +25,7 @@ for t: cxx{**.test...}
   n = $name($t)...
 
   ./: $d/exe{$n}: $t $d/{hxx ixx txx}{+$n} $d/testscript{+$n}
-  $d/exe{$n}: libul{unittest}: bin.whole = false
+  $d/exe{$n}: lib{unittest-main}: bin.whole = false
 }
 
 # Include the generated version header into the distribution (so that we don't
